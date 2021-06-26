@@ -18,18 +18,18 @@ website: https://hardhat.org
 
 pragma solidity ^0.7.0;
 
-import "hardhat/console.sol";
-
 // Hardhat Token Contract
 contract Token {
-	string public name = "My Hardhat Token";
-	string public symbol = "MBT";
+	string public name = "Felix Nan Token";
+	string public symbol = "FNT";
 
 	uint256 public totalSupply = 1000000;
 
 	address public owner;
 
   	mapping(address => uint256) balances;
+
+	event Transfer(address to, uint amount);
 
 	/**
 	* Contract initialization.
@@ -48,14 +48,12 @@ contract Token {
 	* `external` only callable from outside the contract.
 	*/
 	function transfer(address to, uint256 amount) external {
-		console.log("sender balance is %s tokens", balances[msg.sender]);
-		console.log("send %s tokens to %s", amount, to);
-
 		/// @notice check if the transaction sender has enough tokens. If not transaction will revert.
 		require(balances[msg.sender] >= amount, "You don't have enough tokens.");
 
 		balances[msg.sender] -= amount;
 		balances[to] += amount;
+		emit Transfer(to, amount);
 	}
 
 	/**
