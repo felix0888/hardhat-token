@@ -22,48 +22,48 @@ import "hardhat/console.sol";
 
 // Hardhat Token Contract
 contract Token {
-  string public name = "My Hardhat Token";
-  string public symbol = "MBT";
+	string public name = "My Hardhat Token";
+	string public symbol = "MBT";
 
-  uint256 public totalSupply = 1000000;
+	uint256 public totalSupply = 1000000;
 
-  address public owner;
+	address public owner;
 
-  mapping(address => uint256) balances;
+  	mapping(address => uint256) balances;
 
-  /**
-   * Contract initialization.
-   *
-   * Is executed only once when the contract is created.
-   * Assign totalSupply to the transaction sender - the account that is deploying the contract.
-   */
-  constructor() {
-    balances[msg.sender] = totalSupply;
-    owner = msg.sender;
-  }
+	/**
+	* Contract initialization.
+	*
+	* Is executed only once when the contract is created.
+	* Assign totalSupply to the transaction sender - the account that is deploying the contract.
+	*/
+	constructor() {
+		balances[msg.sender] = totalSupply;
+		owner = msg.sender;
+	}
 
-  /**
-   * A function to transfer tokens.
-   *
-   * `external` only callable from outside the contract.
-   */
-  function transfer(address to, uint256 amount) external {
-    console.log("sender balance is %s tokens", balances[msg.sender]);
-    console.log("send %s tokens to %s", amount, to);
+	/**
+	* A function to transfer tokens.
+	*
+	* `external` only callable from outside the contract.
+	*/
+	function transfer(address to, uint256 amount) external {
+		console.log("sender balance is %s tokens", balances[msg.sender]);
+		console.log("send %s tokens to %s", amount, to);
 
-    /// @notice check if the transaction sender has enough tokens. If not transaction will revert.
-    require(balances[msg.sender] >= amount, "You don't have enough tokens.");
+		/// @notice check if the transaction sender has enough tokens. If not transaction will revert.
+		require(balances[msg.sender] >= amount, "You don't have enough tokens.");
 
-    balances[msg.sender] -= amount;
-    balances[to] += amount;
-  }
+		balances[msg.sender] -= amount;
+		balances[to] += amount;
+	}
 
-  /**
-   * A function to retrieve the token balance of the account
-   *
-   * `view` doesn't modify the contract's state. Allows us to call without executing a transaction.
-   */
-  function balanceOf(address account) external view returns (uint256) {
-    return balances[account];
-  }
+	/**
+	* A function to retrieve the token balance of the account
+	*
+	* `view` doesn't modify the contract's state. Allows us to call without executing a transaction.
+	*/
+	function balanceOf(address account) external view returns (uint256) {
+		return balances[account];
+	}
 }
